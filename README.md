@@ -1,6 +1,6 @@
 # CalendarView
 
-## Introdce
+## Introduce
 
 这是一个CalendarView的demo，实现最基本的Calendar功能，本想做到更抽象的，考虑到定制化程度都教大，简单的demo更易于理解。
 

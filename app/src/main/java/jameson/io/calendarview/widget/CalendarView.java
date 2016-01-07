@@ -48,7 +48,7 @@ public class CalendarView extends LinearLayout {
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.view_calander, this, true);
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.calendar_view_calander, this, true);
         mGridView = (GridView) rootView.findViewById(R.id.gridView);
         mWeekLayout = (LinearLayout) rootView.findViewById(R.id.week_layout);
         renderWeek();
@@ -100,7 +100,7 @@ public class CalendarView extends LinearLayout {
     private void renderWeek() {
         mWeekLayout.removeAllViews();
         for (int i = 0; i < 7; i++) {
-            TextView weekView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_calendar_week_text, mWeekLayout, false);
+            TextView weekView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.calendar_view_calendar_week_text, mWeekLayout, false);
             weekView.setText(CalendarUtil.getWeekText(i));
             mWeekLayout.addView(weekView, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
         }

@@ -35,13 +35,13 @@ public class MainActivity extends Activity implements CalenderAdapter.OnDayClick
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                mMonthOffset = position + 1 - mViewPager.getAdapter().getCount();
-                renderUI();
+
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                mMonthOffset = position + 1 - mViewPager.getAdapter().getCount();
+                renderUI();
             }
 
             @Override

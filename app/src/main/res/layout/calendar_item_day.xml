@@ -9,9 +9,9 @@
         android:layout_width="@dimen/text_height_width"
         android:layout_height="@dimen/text_height_width"
         android:layout_gravity="center"
-        android:background="@drawable/date_number_background"
+        android:background="@drawable/calendar_date_number_background"
         android:gravity="center"
         android:text="31"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/date_number_text_color"/>
+        android:textColor="@color/calendar_date_number_text_color"/>
 </LinearLayout>

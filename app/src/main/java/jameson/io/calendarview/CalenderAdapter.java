@@ -26,7 +26,7 @@ public class CalenderAdapter extends HBaseAdapter<DayItem> {
 
     @Override
     public int onNewItemViewRes() {
-        return R.layout.item_day;
+        return R.layout.calendar_item_day;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CalenderAdapter extends HBaseAdapter<DayItem> {
             dayView.setTextColor(Color.BLUE);
             dayView.setVisibility(mIsOutMonthHide ? View.INVISIBLE : View.VISIBLE);
         } else {
-            dayView.setTextColor(getContext().getResources().getColorStateList(R.color.date_number_text_color));
+            dayView.setTextColor(getContext().getResources().getColorStateList(R.color.calendar_date_number_text_color));
             dayView.setVisibility(View.VISIBLE);
         }
 

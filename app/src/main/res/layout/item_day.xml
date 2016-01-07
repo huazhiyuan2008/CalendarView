@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dayOfMonth"
+        android:layout_width="@dimen/text_height_width"
+        android:layout_height="@dimen/text_height_width"
+        android:layout_gravity="center"
+        android:background="@drawable/date_number_background"
+        android:gravity="center"
+        android:text="31"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/date_number_text_color"/>
+</LinearLayout>

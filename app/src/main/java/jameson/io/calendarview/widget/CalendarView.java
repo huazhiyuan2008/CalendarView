@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import jameson.io.calendarview.OnDayClickListener;
 import jameson.io.calendarview.util.CalendarUtil;
 import jameson.io.calendarview.CalenderAdapter;
 import jameson.io.calendarview.DayItem;
@@ -22,15 +23,17 @@ import jameson.io.calendarview.R;
  * <p>
  * Created by jameson on 1/6/16.
  */
-public class CalendarView extends LinearLayout {
+public class CalendarView extends LinearLayout implements OnDayClickListener {
 
-    private GridView mGridView;
-    private CalenderAdapter mAdapter;
-    private LinearLayout mWeekLayout;
+    protected GridView mGridView;
+    protected CalenderAdapter mAdapter;
+    protected LinearLayout mWeekLayout;
+    protected OnDayClickListener mOnDayClickListener;
+
     public static int FIRST_DAY_OF_WEEK = 0;
     public static final int MAX_ITEM_COUNT_6x7 = 42; // 6行7列
     public static final int MAX_ITEM_COUNT_5x7 = 35; // 5行7列
-    private List<DayItem> mList = new ArrayList<>();
+    protected List<DayItem> mList = new ArrayList<>();
 
     public CalendarView(Context context) {
         super(context);
@@ -55,10 +58,16 @@ public class CalendarView extends LinearLayout {
 
         mAdapter = new CalenderAdapter(getContext(), mList);
         mGridView.setAdapter(mAdapter);
+
+        initView(rootView);
     }
 
-    public void init(Calendar currentCalendar, CalenderAdapter.OnDayClickListener onDayClickListener) {
-        mAdapter.setOnDayClickListener(onDayClickListener);
+    protected void initView(View rootView) {
+    }
+
+    public void init(Calendar currentCalendar, OnDayClickListener onDayClickListener) {
+        mOnDayClickListener = onDayClickListener;
+        mAdapter.setOnDayClickListener(this);
         mList.clear();
 
         Calendar preC = CalendarUtil.getPreMonthCalendar(currentCalendar);
@@ -68,7 +77,7 @@ public class CalendarView extends LinearLayout {
         int lastDaysOfMonth = currentCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);   // 上一个月的总天数
         int preLastDaysOfMonth = preC.getActualMaximum(Calendar.DAY_OF_MONTH);  // 上一个月的总天数
 
-        System.out.println("dayOfWeek=========" + dayOfWeek);
+//        System.out.println("dayOfWeek=========" + dayOfWeek);
 
         int length = MAX_ITEM_COUNT_5x7;
         // 超过5行7列
@@ -110,5 +119,12 @@ public class CalendarView extends LinearLayout {
     public void postInvalidate() {
         mAdapter.notifyDataSetChanged();
         super.postInvalidate();
+    }
+
+    @Override
+    public void onDayClick(DayItem data, int position) {
+        if (mOnDayClickListener != null) {
+            mOnDayClickListener.onDayClick(data, position);
+        }
     }
 }

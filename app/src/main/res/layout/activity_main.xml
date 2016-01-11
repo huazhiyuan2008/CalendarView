@@ -5,10 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -30,5 +28,32 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3f123456"/>
+        android:background="@color/calendar_background_color"
+        android:visibility="gone"/>
+
+    <jameson.io.calendarview.widget.ExpandCalendarViewPager
+        android:id="@+id/collapseCalendarViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/calendar_background_color"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toggleCalendarViewPager"
+        android:text="toggle calendar"/>
+
+    <jameson.io.calendarview.widget.ExpandCalendarView
+        android:id="@+id/collapseCalendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/calendar_background_color"
+        android:visibility="visible"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toggleCalendar"
+        android:text="toggle calendar"/>
 </LinearLayout>

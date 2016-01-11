@@ -30,7 +30,7 @@ public class CalenderAdapter extends HBaseAdapter<DayItem> {
     }
 
     @Override
-    public void onBindItemView(View convertView, final DayItem data, int position, ViewGroup parent) {
+    public void onBindItemView(View convertView, final DayItem data, final int position, ViewGroup parent) {
         TextView dayView = (TextView) convertView.findViewById(R.id.dayOfMonth);
 
         dayView.setText(data.getDayOfMonth() + "");
@@ -53,7 +53,7 @@ public class CalenderAdapter extends HBaseAdapter<DayItem> {
                 mSelectedCalendar.set(data.getYear(), data.getMonth(), data.getDayOfMonth());
                 notifyDataSetChanged();
                 if (mOnDayClickListener != null) {
-                    mOnDayClickListener.onDayClick(data);
+                    mOnDayClickListener.onDayClick(data, position);
                 }
             }
         });
@@ -85,7 +85,4 @@ public class CalenderAdapter extends HBaseAdapter<DayItem> {
         mIsOutMonthHide = isOutMonthHide;
     }
 
-    public interface OnDayClickListener {
-        public void onDayClick(DayItem data);
-    }
 }

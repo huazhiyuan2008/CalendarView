@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/week_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_height="@dimen/week_layout_height"
+        android:orientation="horizontal">
 
     </LinearLayout>
 
@@ -18,8 +16,24 @@
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/week_layout"
         android:listSelector="@android:color/transparent"
         android:numColumns="7"
         android:stretchMode="columnWidth"/>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/selected_gridView_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/day_item_height"
+        android:layout_below="@id/week_layout"
+        android:background="@color/colorAccent"
+        android:visibility="invisible">
+
+        <GridView
+            android:id="@+id/selected_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="7"/>
+    </RelativeLayout>
+</RelativeLayout>

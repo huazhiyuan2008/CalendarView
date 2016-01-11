@@ -1,6 +1,7 @@
 package jameson.io.calendarview.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import jameson.io.calendarview.CalenderAdapter;
 import jameson.io.calendarview.DayItem;
+import jameson.io.calendarview.OnDayClickListener;
 import jameson.io.calendarview.util.CalendarUtil;
 
 /**
@@ -19,12 +20,12 @@ import jameson.io.calendarview.util.CalendarUtil;
  *
  * Created by jameson on 1/6/16.
  */
-public class CalendarViewPager extends WrapContentHeightViewPager implements CalenderAdapter.OnDayClickListener {
+public class CalendarViewPager extends WrapContentHeightViewPager implements OnDayClickListener {
     // 最大显示10年
     private static final int COUNT = 120;
-    private List<View> mViews;
+    protected List<CalendarView> mViews;
     private Calendar mCalendar = Calendar.getInstance();
-    private CalenderAdapter.OnDayClickListener mListener;
+    private OnDayClickListener mListener;
 
     public CalendarViewPager(Context context) {
         super(context);
@@ -39,11 +40,11 @@ public class CalendarViewPager extends WrapContentHeightViewPager implements Cal
     private void initViews() {
     }
 
-    public void init(CalenderAdapter.OnDayClickListener listener) {
+    public void init(OnDayClickListener listener) {
         mListener = listener;
         mViews = new ArrayList<>(COUNT);
         for (int i = COUNT - 1; i >= 0; i--) {
-            CalendarView view = new CalendarView(getContext());
+            CalendarView view = getCalendarView();
             view.init(CalendarUtil.getMonthsByOffset(mCalendar, -i), this);
             mViews.add(view);
         }
@@ -51,10 +52,15 @@ public class CalendarViewPager extends WrapContentHeightViewPager implements Cal
         setCurrentItem(COUNT - 1);
     }
 
+    @NonNull
+    protected CalendarView getCalendarView() {
+        return new CalendarView(getContext());
+    }
+
     @Override
-    public void onDayClick(DayItem data) {
+    public void onDayClick(DayItem data, int position) {
         if (mListener != null) {
-            mListener.onDayClick(data);
+            mListener.onDayClick(data, position);
         }
     }
 

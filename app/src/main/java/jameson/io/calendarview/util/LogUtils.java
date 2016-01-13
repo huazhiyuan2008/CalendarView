@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class LogUtils {
 
     public static boolean mLogEnable = true;
+    public static final String PREFIX = "LogUtils--";
 
     private static String mClassname;
     private static ArrayList<String> mMethods;
@@ -129,7 +130,7 @@ public class LogUtils {
                     continue;
                 } else {
                     int b = st.getClassName().lastIndexOf(".") + 1;
-                    String TAG = st.getClassName().substring(b);
+                    String TAG = PREFIX + st.getClassName().substring(b);
                     String message = st.getMethodName() + "():" + st.getLineNumber() + "->" + msg;
                     String[] content = new String[]{TAG, message};
                     return content;

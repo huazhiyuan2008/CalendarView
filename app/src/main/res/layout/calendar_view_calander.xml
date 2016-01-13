@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/week_layout"
@@ -12,28 +12,31 @@
 
     </LinearLayout>
 
-    <jameson.io.calendarview.widget.MatchParentGridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/week_layout"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="7"
-        android:stretchMode="columnWidth"/>
+
 
     <RelativeLayout
         android:id="@+id/selected_gridView_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/day_item_height"
         android:layout_below="@id/week_layout"
-        android:background="@color/colorAccent"
-        android:visibility="invisible">
+        >
+
+        <jameson.io.calendarview.widget.MatchParentGridView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/week_layout"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="7"
+            android:stretchMode="columnWidth"/>
 
         <GridView
             android:id="@+id/selected_gridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:listSelector="@android:color/transparent"
+            android:background="@color/colorAccent"
+            android:visibility="invisible"
             android:numColumns="7"/>
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

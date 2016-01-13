@@ -5,8 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import jameson.io.calendarview.R;
@@ -31,17 +33,50 @@ public class ExpandCalendarViewPager extends CalendarViewPager {
         super(context, attrs);
     }
 
+    @Override
+    protected void initViews() {
+        super.initViews();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (mOriginHeight == 0) {
+                    mOriginHeight = getHeight();
+                    LogUtils.i(mOriginHeight + "");
+                }
+            }
+        });
+
+        addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                View currentView = getCurrentView();
+                if (currentView != null) {
+                    //LogUtils.w(currentView.getHeight() + ", " + currentView.getMeasuredHeight());
+                    currentView.measure(0, 0);
+                    int height = currentView.getMeasuredHeight();
+                    //LogUtils.w(currentView.getHeight() + ", " + height);
+                    setHeight(height);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
     protected CalendarView getCalendarView() {
         return new ExpandCalendarView(getContext());
     }
 
     public void toggleCollapse() {
         if (mAnim != null && mAnim.isRunning()) return;
-
-//        for (int i = 0; i < getChildCount(); i++) {
-//            CollapseCalendarView view = (CollapseCalendarView) mViews.get(getCurrentItem());
-//            view.toggleCollapse();
-//        }
 
         if (mOriginHeight == 0) {
             mOriginHeight = getHeight();
@@ -56,10 +91,7 @@ public class ExpandCalendarViewPager extends CalendarViewPager {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    for (int i = 0; i < getChildCount(); i++) {
-                        ExpandCalendarView view = (ExpandCalendarView) mViews.get(getCurrentItem());
-                        view.closeWithoutAnim();
-                    }
+                    ((ExpandCalendarView) getCurrentView()).closeWithoutAnim();
                 }
             });
         } else {
@@ -69,10 +101,7 @@ public class ExpandCalendarViewPager extends CalendarViewPager {
                 @Override
                 public void onAnimationStart(Animator animation) {
                     super.onAnimationStart(animation);
-                    for (int i = 0; i < getChildCount(); i++) {
-                        ExpandCalendarView view = (ExpandCalendarView) mViews.get(getCurrentItem());
-                        view.openWithoutAnim();
-                    }
+                    ((ExpandCalendarView) getCurrentView()).openWithoutAnim();
                 }
             });
         }
@@ -107,11 +136,18 @@ public class ExpandCalendarViewPager extends CalendarViewPager {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mOriginHeight > 0) {
+        if (mOriginHeight > 0 || mHeight > 0) {
+            LogUtils.d(mHeight + "");
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(mHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+    }
+
+    public void setHeight(int mHeight) {
+        this.mHeight = mHeight;
+        this.mOriginHeight = mHeight;
+        requestLayout();
     }
 }

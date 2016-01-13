@@ -77,13 +77,10 @@ public class CalendarView extends LinearLayout implements OnDayClickListener {
         int lastDaysOfMonth = currentCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);   // 上一个月的总天数
         int preLastDaysOfMonth = preC.getActualMaximum(Calendar.DAY_OF_MONTH);  // 上一个月的总天数
 
-//        System.out.println("dayOfWeek=========" + dayOfWeek);
+//        LogUtils.d("dayOfWeek=========" + dayOfWeek);
 
-        int length = MAX_ITEM_COUNT_5x7;
-        // 超过5行7列
-        if (dayOfWeek + lastDaysOfMonth + 1 > MAX_ITEM_COUNT_5x7) {
-            length = MAX_ITEM_COUNT_6x7;
-        }
+        int minCount = dayOfWeek + lastDaysOfMonth;
+        int length = (minCount - 1) / 7 * 7 + 7;
         DayItem item;
         for (int i = 0; i < length; i++) {
             item = new DayItem();

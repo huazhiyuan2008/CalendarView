@@ -26,6 +26,7 @@ public class CalendarViewPager extends WrapContentHeightViewPager implements OnD
     protected List<CalendarView> mViews;
     private Calendar mCalendar = Calendar.getInstance();
     private OnDayClickListener mListener;
+    private CalendarViewPagerAdapter mAdapter;
 
     public CalendarViewPager(Context context) {
         super(context);
@@ -37,18 +38,14 @@ public class CalendarViewPager extends WrapContentHeightViewPager implements OnD
         initViews();
     }
 
-    private void initViews() {
+    protected void initViews() {
     }
 
     public void init(OnDayClickListener listener) {
         mListener = listener;
-        mViews = new ArrayList<>(COUNT);
-        for (int i = COUNT - 1; i >= 0; i--) {
-            CalendarView view = getCalendarView();
-            view.init(CalendarUtil.getMonthsByOffset(mCalendar, -i), this);
-            mViews.add(view);
-        }
-        setAdapter(new CalendarViewPagerAdapter());
+        mViews = new ArrayList<>();
+        mAdapter = new CalendarViewPagerAdapter();
+        setAdapter(mAdapter);
         setCurrentItem(COUNT - 1);
     }
 
@@ -78,14 +75,21 @@ public class CalendarViewPager extends WrapContentHeightViewPager implements OnD
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(mViews.get(position));
+            CalendarView calendarView = (CalendarView) object;
+            container.removeView(calendarView);
+            mViews.remove(calendarView);
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(mViews.get(position));
-            return mViews.get(position);
+            CalendarView calendarView = getCalendarView();
+            calendarView.init(CalendarUtil.getMonthsByOffset(mCalendar, position - COUNT + 1), CalendarViewPager.this);
+            calendarView.setTag(position);
+            container.addView(calendarView);
+            mViews.add(calendarView);
+            return calendarView;
         }
+
 
         @Override
         public int getCount() {
@@ -99,9 +103,11 @@ public class CalendarViewPager extends WrapContentHeightViewPager implements OnD
 
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            // mCurrentView = (View) object;
-            refreshState();
+            //refreshState();
         }
     }
 
+    public View getCurrentView() {
+        return findViewWithTag(getCurrentItem());
+    }
 }

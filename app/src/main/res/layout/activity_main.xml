@@ -31,29 +31,43 @@
         android:background="@color/calendar_background_color"
         android:visibility="gone"/>
 
-    <jameson.io.calendarview.widget.ExpandCalendarViewPager
-        android:id="@+id/collapseCalendarViewPager"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/calendar_background_color"/>
+        android:orientation="vertical"
+        android:visibility="visible">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="toggleCalendarViewPager"
-        android:text="toggle calendar"/>
+        <jameson.io.calendarview.widget.ExpandCalendarViewPager
+            android:id="@+id/collapseCalendarViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/calendar_background_color"/>
 
-    <jameson.io.calendarview.widget.ExpandCalendarView
-        android:id="@+id/collapseCalendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/calendar_background_color"
-        android:visibility="visible"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="toggleCalendarViewPager"
+            android:text="toggle ExpandCalendarViewPager"/>
+    </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="toggleCalendar"
-        android:text="toggle calendar"/>
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <jameson.io.calendarview.widget.ExpandCalendarView
+            android:id="@+id/collapseCalendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/calendar_background_color"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="toggleCalendar"
+            android:text="toggle ExpandCalendarView"/>
+    </LinearLayout>
+
 </LinearLayout>

@@ -109,7 +109,7 @@ public class ExpandCalendarView extends CalendarView {
 
         if (!mIsOpen) return;
         if (mSelectedPos - mGridView.getFirstVisiblePosition() > mGridView.getChildCount() - 1) {
-            LogUtils.w(mSelectedPos + ", " + mGridView.getFirstVisiblePosition() + ", " + mGridView.getChildCount());
+            //LogUtils.w(mSelectedPos + ", " + mGridView.getFirstVisiblePosition() + ", " + mGridView.getChildCount());
             return;
         }
         View mSelectedView = mGridView.getChildAt(mSelectedPos - mGridView.getFirstVisiblePosition());
@@ -219,7 +219,7 @@ public class ExpandCalendarView extends CalendarView {
     public void openWithoutAnim() {
         mIsOpen = true;
         mSelectedLinearLayout.setVisibility(View.INVISIBLE);
-        setGridViewHeight(mGridViewOriginHeight);
+//        setGridViewHeight(mGridViewOriginHeight);
     }
 
     public void closeWithoutAnim() {
@@ -227,7 +227,7 @@ public class ExpandCalendarView extends CalendarView {
         // renderSelectedGridView(mSelectedPos);
         renderSelectedGridViewTop(0);
         mSelectedLinearLayout.setVisibility(View.VISIBLE);
-        mSelectedItemHeight = (int) getResources().getDimension(R.dimen.day_item_height);
-        setGridViewHeight(mSelectedItemHeight);
+//        mSelectedItemHeight = (int) getResources().getDimension(R.dimen.day_item_height);
+//        setGridViewHeight(mSelectedItemHeight);
     }
 }

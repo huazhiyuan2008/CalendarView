@@ -20,8 +20,8 @@ public class MainActivity extends Activity implements OnDayClickListener {
     private Calendar mCurrentCalendar = Calendar.getInstance();
     private int mMonthOffset;
     private CalendarViewPager mViewPager;
-    private ExpandCalendarView mCollapseCalendarView;
-    private ExpandCalendarViewPager mCollapseCalendarViewPager;
+    private ExpandCalendarView mExpandCalendarView;
+    private ExpandCalendarViewPager mExpandCalendarViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +32,16 @@ public class MainActivity extends Activity implements OnDayClickListener {
     }
 
     private void initViews() {
-        mCollapseCalendarViewPager = (ExpandCalendarViewPager) findViewById(R.id.collapseCalendarViewPager);
-        mCollapseCalendarViewPager.init(this);
-        mCollapseCalendarView = (ExpandCalendarView) findViewById(R.id.collapseCalendarView);
-        mCollapseCalendarView.init(mCurrentCalendar, this);
+        mExpandCalendarViewPager = (ExpandCalendarViewPager) findViewById(R.id.collapseCalendarViewPager);
+        mExpandCalendarViewPager.init(this);
+        mExpandCalendarView = (ExpandCalendarView) findViewById(R.id.collapseCalendarView);
+        mExpandCalendarView.init(mCurrentCalendar, this);
         mViewPager = (CalendarViewPager) findViewById(R.id.viewPager);
         mTitleView = (TextView) findViewById(R.id.title);
         renderTitle(mCurrentCalendar);
 
         mViewPager.init(this);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mExpandCalendarViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -75,10 +75,10 @@ public class MainActivity extends Activity implements OnDayClickListener {
     }
 
     public void toggleCalendar(View view) {
-        mCollapseCalendarView.toggleCollapse();
+        mExpandCalendarView.toggleCollapse();
     }
 
     public void toggleCalendarViewPager(View view) {
-        mCollapseCalendarViewPager.toggleCollapse();
+        mExpandCalendarViewPager.toggleCollapse();
     }
 }

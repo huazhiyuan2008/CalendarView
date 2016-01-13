@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by jameson on 1/6/16.
  */
-public class CalenderAdapter extends HBaseAdapter<DayItem> {
+public class CalendarAdapter extends HBaseAdapter<DayItem> {
     // static保证只有一个被选中
     private static Calendar mSelectedCalendar;
     private OnDayClickListener mOnDayClickListener;
     // 超出本月的时间是否显示
     private boolean mIsOutMonthHide = false;
 
-    public CalenderAdapter(Context context, List<DayItem> list) {
+    public CalendarAdapter(Context context, List<DayItem> list) {
         super(context, list);
         mSelectedCalendar = Calendar.getInstance();
     }

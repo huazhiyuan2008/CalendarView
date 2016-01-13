@@ -7,8 +7,9 @@ import java.util.Calendar;
  */
 public class CalendarUtil {
 
-    // 指定某年中的某月的第一天是星期几
-    public static int getWeekdayOfMonth(Calendar cal) {
+    // 指定某年中的某月的第一天是星期几，星期日-星期一分别为0-6
+    public static int getWeekdayOfMonth(Calendar c) {
+        Calendar cal = (Calendar) c.clone();
         cal.set(Calendar.DATE, 1);
         return cal.get(Calendar.DAY_OF_WEEK) - 1;
     }

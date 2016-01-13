@@ -8,14 +8,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import jameson.io.calendarview.CalenderAdapter;
+import jameson.io.calendarview.CalendarAdapter;
 import jameson.io.calendarview.DayItem;
 import jameson.io.calendarview.OnDayClickListener;
 import jameson.io.calendarview.R;
@@ -26,9 +26,8 @@ import jameson.io.calendarview.util.LogUtils;
  * Created by jameson on 1/7/16.
  */
 public class ExpandCalendarView extends CalendarView {
-    private RelativeLayout mSelectedLinearLayout;
     private GridView mSelectedGridView;
-    private CalenderAdapter mSelectedAdapter;
+    private CalendarAdapter mSelectedAdapter;
     private List<DayItem> mSelectedList = new ArrayList<>();
     private int mTopOffset = 0;
     private int mSelectedItemHeight = 0;
@@ -58,9 +57,8 @@ public class ExpandCalendarView extends CalendarView {
 //        LogUtils.d("mTopOffset======" + mTopOffset + ", " + mSelectedItemHeight);
 
         mSelectedGridView = (GridView) rootView.findViewById(R.id.selected_gridView);
-        mSelectedLinearLayout = (RelativeLayout) rootView.findViewById(R.id.selected_gridView_layout);
 
-        mSelectedAdapter = new CalenderAdapter(getContext(), mSelectedList);
+        mSelectedAdapter = new CalendarAdapter(getContext(), mSelectedList);
         mSelectedGridView.setAdapter(mSelectedAdapter);
 
         mGridView.post(new Runnable() {
@@ -76,7 +74,7 @@ public class ExpandCalendarView extends CalendarView {
         super.init(currentCalendar, onDayClickListener);
         int dayOfWeek = CalendarUtil.getWeekdayOfMonth(currentCalendar);  // 某月第一天为星期几
 
-        mSelectedPos = dayOfWeek + currentCalendar.get(Calendar.DAY_OF_MONTH);
+        mSelectedPos = dayOfWeek + currentCalendar.get(Calendar.DAY_OF_MONTH) - 1;
         renderSelectedGridView(mSelectedPos, true);
     }
 
@@ -144,8 +142,8 @@ public class ExpandCalendarView extends CalendarView {
     private void animClose(final int to) {
         final int from = mGridView.getHeight();
         mTopOffset = (int) getResources().getDimension(R.dimen.week_layout_height);
-        final int selectedBottom = mSelectedLinearLayout.getBottom() - mTopOffset;
-        final int selectedHeight = mSelectedLinearLayout.getHeight();
+        final int selectedBottom = mSelectedGridView.getBottom() - mTopOffset;
+        final int selectedHeight = mSelectedGridView.getHeight();
         LogUtils.d(String.format("animClose======from=%s, to=%s, selectedBottom=%s, selectedHeight=%s", from, to, selectedBottom, selectedHeight));
         mCloseAnim = ObjectAnimator.ofInt(from, to);
         mCloseAnim.setDuration(ANIM_TIME);
@@ -164,7 +162,7 @@ public class ExpandCalendarView extends CalendarView {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                mSelectedLinearLayout.setVisibility(View.VISIBLE);
+                closeWithoutAnim();
             }
         });
         mCloseAnim.start();
@@ -187,18 +185,13 @@ public class ExpandCalendarView extends CalendarView {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                mSelectedLinearLayout.setVisibility(View.INVISIBLE);
+                mSelectedGridView.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                mGridView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        renderSelectedGridView(mSelectedPos);
-                    }
-                });
+                openWithoutAnim();
             }
         });
         mOpenAnim.start();
@@ -211,14 +204,14 @@ public class ExpandCalendarView extends CalendarView {
 
     private void renderSelectedGridViewTop(int top) {
         mTopOffset = 0;//(int) getResources().getDimension(R.dimen.week_layout_height);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSelectedLinearLayout.getLayoutParams();
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mSelectedGridView.getLayoutParams();
         lp.topMargin = top + mTopOffset;
-        mSelectedLinearLayout.setLayoutParams(lp);
+        mSelectedGridView.setLayoutParams(lp);
     }
 
     public void openWithoutAnim() {
         mIsOpen = true;
-        mSelectedLinearLayout.setVisibility(View.INVISIBLE);
+        mSelectedGridView.setVisibility(View.INVISIBLE);
 //        setGridViewHeight(mGridViewOriginHeight);
     }
 
@@ -226,7 +219,9 @@ public class ExpandCalendarView extends CalendarView {
         mIsOpen = false;
         // renderSelectedGridView(mSelectedPos);
         renderSelectedGridViewTop(0);
-        mSelectedLinearLayout.setVisibility(View.VISIBLE);
+        mSelectedGridView.setVisibility(View.VISIBLE);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(mSelectedGridView, "alpha", 0f, 1f);
+        anim.start();
 //        mSelectedItemHeight = (int) getResources().getDimension(R.dimen.day_item_height);
 //        setGridViewHeight(mSelectedItemHeight);
     }

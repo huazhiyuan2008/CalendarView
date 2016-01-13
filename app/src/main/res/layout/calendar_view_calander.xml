@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/week_layout"
@@ -12,20 +12,15 @@
 
     </LinearLayout>
 
-
-
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/selected_gridView_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/day_item_height"
-        android:layout_below="@id/week_layout"
-        >
+        android:layout_height="match_parent">
 
         <jameson.io.calendarview.widget.MatchParentGridView
             android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/week_layout"
             android:listSelector="@android:color/transparent"
             android:numColumns="7"
             android:stretchMode="columnWidth"/>
@@ -33,10 +28,10 @@
         <GridView
             android:id="@+id/selected_gridView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:listSelector="@android:color/transparent"
+            android:layout_height="@dimen/day_item_height"
             android:background="@color/colorAccent"
-            android:visibility="invisible"
-            android:numColumns="7"/>
-    </RelativeLayout>
-</LinearLayout>
+            android:listSelector="@android:color/transparent"
+            android:numColumns="7"
+            android:visibility="invisible"/>
+    </FrameLayout>
+</merge>

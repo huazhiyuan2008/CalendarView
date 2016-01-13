@@ -14,7 +14,7 @@ import java.util.List;
 
 import jameson.io.calendarview.OnDayClickListener;
 import jameson.io.calendarview.util.CalendarUtil;
-import jameson.io.calendarview.CalenderAdapter;
+import jameson.io.calendarview.CalendarAdapter;
 import jameson.io.calendarview.DayItem;
 import jameson.io.calendarview.R;
 
@@ -26,7 +26,7 @@ import jameson.io.calendarview.R;
 public class CalendarView extends LinearLayout implements OnDayClickListener {
 
     protected GridView mGridView;
-    protected CalenderAdapter mAdapter;
+    protected CalendarAdapter mAdapter;
     protected LinearLayout mWeekLayout;
     protected OnDayClickListener mOnDayClickListener;
 
@@ -51,12 +51,13 @@ public class CalendarView extends LinearLayout implements OnDayClickListener {
     }
 
     private void initView() {
+        setOrientation(VERTICAL);
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.calendar_view_calander, this, true);
         mGridView = (GridView) rootView.findViewById(R.id.gridView);
         mWeekLayout = (LinearLayout) rootView.findViewById(R.id.week_layout);
         renderWeek();
 
-        mAdapter = new CalenderAdapter(getContext(), mList);
+        mAdapter = new CalendarAdapter(getContext(), mList);
         mGridView.setAdapter(mAdapter);
 
         initView(rootView);
